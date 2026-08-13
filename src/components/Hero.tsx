@@ -1,44 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Sparkles, ArrowRight, Play, Eye } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
 
 interface HeroProps {
   onOrderClick: () => void;
   onViewInsideClick: () => void;
 }
 
+// A simple deterministic pseudo-random generator to guarantee React render purity
+function pseudoRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
 export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
-  // Counters for People Viewing & Batch Stock
-  const [viewers, setViewers] = useState(14);
-  const [stock, setStock] = useState(8);
-
-  useEffect(() => {
-    // People viewing random shift
-    const viewerInterval = setInterval(() => {
-      setViewers((prev) => {
-        const delta = Math.floor(Math.random() * 5) - 2; // -2 to +2
-        const nextVal = prev + delta;
-        return nextVal < 6 ? 6 : nextVal > 24 ? 24 : nextVal;
-      });
-    }, 8000);
-
-    // Stock decrement logic (simulated scarcity)
-    const stockInterval = setInterval(() => {
-      setStock((prev) => (prev > 3 ? prev - 1 : 3));
-    }, 45000);
-
-    return () => {
-      clearInterval(viewerInterval);
-      clearInterval(stockInterval);
-    };
-  }, []);
+  // Render-time state and effects cleaned up to avoid fake urgency and ensure purity
 
   return (
-    <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-20 overflow-hidden bg-[#FFF9F0]">
-      
+    <section className="relative min-h-[50vh] md:min-h-[55vh] flex items-center justify-center pt-16 pb-12 overflow-hidden bg-[#FFF9F0]">
+
       {/* Background Sunrise Image Wrapper with soft opacity overlay */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -54,28 +37,36 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
 
       {/* Floating Golden Particles (SVG-based layout) */}
       <div className="absolute inset-0 pointer-events-none z-1 overflow-hidden">
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-[#D4AF37]/35 blur-[1px]"
-            style={{
-              width: Math.random() * 6 + 3 + "px",
-              height: Math.random() * 6 + 3 + "px",
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-            }}
-            animate={{
-              y: [0, -120, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              opacity: [0.2, 0.8, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
+        {[...Array(12)].map((_, i) => {
+          const w = pseudoRandom(i + 1) * 6 + 3;
+          const h = pseudoRandom(i + 2) * 6 + 3;
+          const left = pseudoRandom(i + 3) * 100;
+          const top = pseudoRandom(i + 4) * 100;
+          const x = pseudoRandom(i + 5) * 30 - 15;
+          const duration = pseudoRandom(i + 6) * 10 + 10;
+          return (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-[#D4AF37]/35 blur-[1px]"
+              style={{
+                width: w + "px",
+                height: h + "px",
+                left: left + "%",
+                top: top + "%",
+              }}
+              animate={{
+                y: [0, -120, 0],
+                x: [0, x, 0],
+                opacity: [0.2, 0.8, 0.2],
+              }}
+              transition={{
+                duration: duration,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Subtle Swinging Temple Bell (Top Right corner of section) */}
@@ -131,23 +122,19 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
 
       {/* Main Grid Layout */}
       <div className="max-w-6xl mx-auto px-4 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
+
         {/* Left Column: Heading, Counters, Sub-heading, and Action Buttons */}
         <div className="lg:col-span-7 space-y-6 md:space-y-8 text-left">
-          
-          {/* Real-time viewer & stock counters */}
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            <span className="flex items-center gap-1.5 bg-[#FFF9F0] border border-[#D4AF37]/35 text-[#7B241C] font-semibold px-3 py-1 rounded-full shadow-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E67E22] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E67E22]"></span>
-              </span>
-              <span>{viewers} devotees viewing this kit</span>
-            </span>
 
-            <span className="flex items-center gap-1.5 bg-[#7B241C] text-[#FFF9F0] font-semibold px-3 py-1 rounded-full shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37]" />
-              <span>Only {stock} kits left in today's batch</span>
+          {/* Authentic Altar Trust Badge */}
+          <div className="flex flex-wrap items-center gap-3 text-xs">
+            <span className="flex items-center gap-1.5 bg-white border border-[#D4AF37]/30 text-[#7B241C] font-bold tracking-wider uppercase px-4 py-1.5 rounded-full shadow-xs">
+              <ShieldCheck className="h-4 w-4 text-[#E67E22]" />
+              <span>100% Priest-Supervised Assembly</span>
+            </span>
+            <span className="flex items-center gap-1.5 bg-[#7B241C] text-[#FFF9F0] font-bold tracking-wider uppercase px-4 py-1.5 rounded-full shadow-xs border border-[#D4AF37]/20">
+              <Sparkles className="h-3.5 w-3.5 text-[#D4AF37] animate-pulse" />
+              <span>Varanasi Sourced</span>
             </span>
           </div>
 
@@ -158,7 +145,7 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
             className="space-y-4"
           >
             <h1 className="font-serif text-4xl md:text-6xl font-bold tracking-wide text-[#7B241C] leading-tight md:leading-[1.12]">
-              Bring the Divine <span className="text-[#E67E22]">Blessings of Kashi</span> to Your Home
+              Authentic Temple Prasad & <span className="text-[#E67E22]">Sacred Essentials</span> From Kashi
             </h1>
             <div className="w-20 h-0.5 bg-[#D4AF37]" />
           </motion.div>
@@ -169,7 +156,7 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="text-base md:text-lg text-gray-700 leading-relaxed font-light max-w-xl"
           >
-            Receive authentic temple prasad, sacred mid-stream Gangajal, Nepal Rudraksha, sandalwood Chandan Mala, and essential puja items sourced directly from the holy city of Kashi.
+            Welcome the divine energies of Shiva&apos;s holy city into your home. Sourced under strict priest supervision and shipped direct from Varanasi.
           </motion.p>
 
           <motion.div
@@ -183,7 +170,7 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
               onClick={onOrderClick}
               className="px-8 py-4.5 bg-gradient-to-r from-[#7B241C] to-[#511812] hover:from-[#E67E22] hover:to-[#D35400] text-white font-serif font-bold text-base tracking-wide rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer"
             >
-              <span>ORDER YOUR KIT (COD)</span>
+              <span>SHOP COLLECTION</span>
               <ArrowRight className="h-5 w-5 text-[#D4AF37] group-hover:translate-x-1.5 transition-transform" />
             </button>
 
@@ -192,8 +179,7 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
               onClick={onViewInsideClick}
               className="px-8 py-4.5 bg-white border border-[#7B241C]/30 text-[#7B241C] font-serif font-bold text-base tracking-wide rounded-xl hover:border-[#7B241C] hover:bg-[#FFF9F0] shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Eye className="h-5 w-5" />
-              <span>VIEW WHAT'S INSIDE</span>
+              <span>EXPLORE CATEGORIES</span>
             </button>
           </motion.div>
         </div>
@@ -207,7 +193,7 @@ export default function Hero({ onOrderClick, onViewInsideClick }: HeroProps) {
         >
           {/* Ambient Gold Glow backdrop */}
           <div className="absolute -inset-4 bg-gradient-to-tr from-[#E67E22]/15 to-[#D4AF37]/15 rounded-full filter blur-2xl pointer-events-none" />
-          
+
           <div className="relative rounded-2xl border border-[#D4AF37]/35 p-2 bg-white/40 backdrop-blur-md shadow-2xl overflow-hidden group">
             <Image
               src="/images/hero_puja_kit.png"

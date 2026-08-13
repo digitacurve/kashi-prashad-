@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Outfit } from "next/font/google";
+import Providers from "@/components/Providers";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -61,7 +62,7 @@ export default function RootLayout({
       className={`${playfair.variable} ${outfit.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full bg-[#FFF9F0] text-[#222222] font-sans flex flex-col">
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

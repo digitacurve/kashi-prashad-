@@ -39,7 +39,7 @@ const steps = [
 
 export default function ProcessTimeline() {
   return (
-    <section className="py-24 bg-[#FFF9F0] relative overflow-hidden">
+    <section className="py-20 bg-white border-t border-gray-100 relative overflow-hidden">
       {/* Decorative center grid lines */}
       <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#7B241C_1px,transparent_1px),linear-gradient(to_bottom,#7B241C_1px,transparent_1px)] [background-size:40px_40px] pointer-events-none" />
 
@@ -49,10 +49,10 @@ export default function ProcessTimeline() {
           <span className="text-xs font-bold text-[#E67E22] tracking-widest uppercase block">
             Sacred Journey
           </span>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-[#7B241C] tracking-wide leading-tight">
+          <h2 className="font-serif text-2xl md:text-3xl font-bold text-gray-900 tracking-wide">
             How Your Blessing Is Prepared
           </h2>
-          <div className="w-24 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
+          <div className="w-12 h-0.5 bg-[#D4AF37] mx-auto mt-2" />
           <p className="text-sm md:text-base text-gray-600">
             We follow a meticulous, Vedic-guided flow to compile, sanitize, bless, and deliver your Kashi Puja Kit.
           </p>

@@ -2,15 +2,28 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Shield, Truck, Sparkles, CheckCircle } from "lucide-react";
+import { X, Shield, Truck, Sparkles, CheckCircle, ShoppingBag } from "lucide-react";
 import confetti from "canvas-confetti";
+import { useCart } from "@/context/CartContext";
 
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
+  productName?: string;
+  selectedVariant?: string;
+  price?: number;
+  originalPrice?: number;
 }
 
-export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
+export default function CheckoutModal({
+  isOpen,
+  onClose,
+  productName = "Kashi Divine Puja Kit",
+  selectedVariant = "",
+  price = 1499,
+  originalPrice = 2999
+}: CheckoutModalProps) {
+  const { checkoutData, cartItems, clearCart } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -55,7 +68,13 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       setIsSubmitting(false);
       setIsSuccess(true);
       setOrderId("KDPK-" + Math.floor(100000 + Math.random() * 900000));
-      
+
+      // If we checked out the cart, clear it
+      const isDirect = checkoutData?.isDirect ?? true;
+      if (!isDirect) {
+        clearCart();
+      }
+
       // Fire confetti
       confetti({
         particleCount: 150,
@@ -111,32 +130,104 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Order Summary */}
                   <div className="bg-white rounded-xl p-4 border border-[#D4AF37]/20 shadow-sm space-y-3">
-                    <div className="flex justify-between items-center pb-2 border-b border-[#7B241C]/5">
-                      <span className="font-medium text-sm text-[#7B241C]">Kashi Divine Puja Kit</span>
-                      <span className="font-serif font-bold text-[#E67E22]">₹1,499</span>
+                    <div className="text-xs font-bold text-[#7B241C] uppercase tracking-wider border-b border-[#7B241C]/5 pb-2 flex items-center gap-1.5">
+                      <ShoppingBag className="h-4 w-4 text-[#E67E22]" />
+                      <span>Items to Order</span>
                     </div>
-                    <div className="text-xs text-gray-500 flex flex-col gap-1">
-                      <div className="flex justify-between">
-                        <span>Original Price</span>
-                        <span className="line-through">₹2,999</span>
-                      </div>
-                      <div className="flex justify-between text-green-600 font-medium">
-                        <span>Discount (50% Off)</span>
-                        <span>-₹1,500</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Sacred Prasad & Gangajal</span>
-                        <span className="text-[#D4AF37] font-medium">FREE SOUVENIR</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>PAN India Shipping</span>
-                        <span className="text-[#E67E22] font-medium">FREE</span>
-                      </div>
+                    <div className="divide-y divide-[#7B241C]/5 max-h-48 overflow-y-auto space-y-2.5 pb-2">
+                      {(() => {
+                        const isDirect = checkoutData?.isDirect ?? true;
+                        const checkoutItems = isDirect
+                          ? [
+                              {
+                                title: checkoutData?.productName || productName,
+                                variantName: checkoutData?.selectedVariant || selectedVariant,
+                                price: checkoutData?.price ?? price,
+                                originalPrice: checkoutData?.originalPrice ?? originalPrice,
+                                quantity: 1,
+                              },
+                            ]
+                          : cartItems.map((item) => ({
+                              title: item.title,
+                              variantName: item.variantName,
+                              price: item.price,
+                              originalPrice: item.originalPrice,
+                              quantity: item.quantity,
+                            }));
+
+                        return checkoutItems.map((item, index) => (
+                          <div key={index} className="flex justify-between items-start pt-2 first:pt-0">
+                            <div>
+                              <span className="font-medium text-xs md:text-sm text-[#7B241C] line-clamp-1">
+                                {item.title}
+                              </span>
+                              {item.variantName && (
+                                <span className="text-[10px] text-gray-500 block">
+                                  Variant: {item.variantName}
+                                </span>
+                              )}
+                              <span className="text-[10px] text-gray-400">Qty: {item.quantity}</span>
+                            </div>
+                            <span className="font-serif font-bold text-xs md:text-sm text-[#E67E22] shrink-0">
+                              ₹{(item.price * item.quantity).toLocaleString()}
+                            </span>
+                          </div>
+                        ));
+                      })()}
                     </div>
-                    <div className="flex justify-between items-center pt-2 border-t border-[#7B241C]/5">
-                      <span className="font-serif font-bold text-[#7B241C]">Total Amount to Pay</span>
-                      <span className="font-serif font-bold text-lg text-[#7B241C]">₹1,499</span>
-                    </div>
+
+                    {/* Cost summary */}
+                    {(() => {
+                      const isDirect = checkoutData?.isDirect ?? true;
+                      const checkoutItems = isDirect
+                        ? [
+                            {
+                              price: checkoutData?.price ?? price,
+                              originalPrice: checkoutData?.originalPrice ?? originalPrice,
+                              quantity: 1,
+                            },
+                          ]
+                        : cartItems.map((item) => ({
+                            price: item.price,
+                            originalPrice: item.originalPrice,
+                            quantity: item.quantity,
+                          }));
+
+                      const finalPrice = checkoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+                      const finalOriginalPrice = checkoutItems.reduce((acc, item) => acc + item.originalPrice * item.quantity, 0);
+                      const finalSavings = finalOriginalPrice - finalPrice;
+
+                      return (
+                        <>
+                          <div className="text-xs text-gray-500 flex flex-col gap-1 pt-2 border-t border-[#7B241C]/5">
+                            <div className="flex justify-between">
+                              <span>Original Price</span>
+                              <span className="line-through">₹{finalOriginalPrice.toLocaleString()}</span>
+                            </div>
+                            {finalSavings > 0 && (
+                              <div className="flex justify-between text-green-600 font-medium">
+                                <span>Discount ({(100 - (finalPrice / finalOriginalPrice) * 100).toFixed(0)}% Off)</span>
+                                <span>-₹{finalSavings.toLocaleString()}</span>
+                              </div>
+                            )}
+                            <div className="flex justify-between">
+                              <span>Sacred Prasad & Gangajal</span>
+                              <span className="text-[#D4AF37] font-medium">FREE SOUVENIR</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>PAN India Shipping</span>
+                              <span className="text-[#E67E22] font-medium">FREE</span>
+                            </div>
+                          </div>
+                          <div className="flex justify-between items-center pt-2 border-t border-[#7B241C]/5">
+                            <span className="font-serif font-bold text-[#7B241C]">Total Amount to Pay</span>
+                            <span className="font-serif font-bold text-lg text-[#7B241C]">
+                              ₹{finalPrice.toLocaleString()}
+                            </span>
+                          </div>
+                        </>
+                      );
+                    })()}
                   </div>
 
                   {/* Delivery Info */}
@@ -144,7 +235,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     <h4 className="font-serif text-base font-semibold text-[#7B241C] border-b border-[#7B241C]/10 pb-1">
                       Delivery Details
                     </h4>
-                    
+
                     <div className="space-y-3">
                       <div>
                         <label className="block text-xs font-semibold text-gray-700 mb-1">
@@ -233,11 +324,10 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     </h4>
 
                     <div className="grid grid-cols-2 gap-3">
-                      <label className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all ${
-                        formData.paymentMethod === "cod" 
-                          ? "border-[#E67E22] bg-[#E67E22]/5" 
+                      <label className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all ${formData.paymentMethod === "cod"
+                          ? "border-[#E67E22] bg-[#E67E22]/5"
                           : "border-gray-200 bg-white hover:border-gray-300"
-                      }`}>
+                        }`}>
                         <input
                           type="radio"
                           name="paymentMethod"
@@ -252,11 +342,10 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </span>
                       </label>
 
-                      <label className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all ${
-                        formData.paymentMethod === "online" 
-                          ? "border-[#E67E22] bg-[#E67E22]/5" 
+                      <label className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 cursor-pointer transition-all ${formData.paymentMethod === "online"
+                          ? "border-[#E67E22] bg-[#E67E22]/5"
                           : "border-gray-200 bg-white hover:border-gray-300"
-                      }`}>
+                        }`}>
                         <input
                           type="radio"
                           name="paymentMethod"
@@ -325,7 +414,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       Order Placed Successfully!
                     </h4>
                     <p className="text-sm text-gray-600 max-w-sm">
-                      Har Har Mahadev! We have received your request for the Kashi Divine Puja Kit.
+                      Har Har Mahadev! We have received your request for the {productName}{selectedVariant ? ` (${selectedVariant})` : ""}.
                     </p>
                   </div>
 

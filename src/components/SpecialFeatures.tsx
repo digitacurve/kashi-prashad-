@@ -2,14 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Phone, ArrowUp, ShoppingBag, Flame, Sparkles } from "lucide-react";
+import { MessageSquare, Phone, ArrowUp, ShoppingBag, Sparkles } from "lucide-react";
 
 interface SpecialFeaturesProps {
   onOrderClick: () => void;
 }
-
-const names = ["Rajesh Kumar", "Amit Sharma", "Siddharth Rao", "Priya Nair", "Vikas Dubey", "Ananya Iyer", "Sunita Patil", "Karan Malhotra", "Ravi Patel", "Suresh Gupta"];
-const cities = ["Mumbai", "Bengaluru", "Chennai", "Delhi", "Pune", "Hyderabad", "Kolkata", "Ahmedabad", "Jaipur", "Kochi"];
 
 export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) {
   // Back to Top State
@@ -21,9 +18,6 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
   // Exit Intent State
   const [showExitIntent, setShowExitIntent] = useState(false);
   const [hasTriggeredExitIntent, setHasTriggeredExitIntent] = useState(false);
-
-  // Recently Ordered Toast State
-  const [recentOrder, setRecentOrder] = useState<{ name: string; city: string; time: string } | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,28 +43,9 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    // Recently Ordered Notifications (Loop every 25 seconds)
-    const orderInterval = setInterval(() => {
-      const randomName = names[Math.floor(Math.random() * names.length)];
-      const randomCity = cities[Math.floor(Math.random() * cities.length)];
-      const randomMinutes = Math.floor(Math.random() * 8) + 1;
-      
-      setRecentOrder({
-        name: randomName,
-        city: randomCity,
-        time: `${randomMinutes} min ago`
-      });
-
-      // Clear after 6 seconds
-      setTimeout(() => {
-        setRecentOrder(null);
-      }, 6000);
-    }, 25000);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      clearInterval(orderInterval);
     };
   }, [hasTriggeredExitIntent]);
 
@@ -151,34 +126,6 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
               <ShoppingBag className="h-4 w-4" />
               <span>ORDER NOW (COD)</span>
             </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Recently Ordered Social Proof Toasts (Bottom Left) */}
-      <AnimatePresence>
-        {recentOrder && (
-          <motion.div
-            initial={{ opacity: 0, x: -50, y: 50 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            className="fixed bottom-6 left-6 z-40 max-w-[280px] bg-white border border-[#D4AF37]/35 rounded-xl shadow-2xl p-3 flex items-center gap-3"
-          >
-            <div className="w-9 h-9 rounded-full bg-[#E67E22]/10 border border-[#E67E22]/20 flex items-center justify-center text-[#E67E22] shrink-0">
-              <ShoppingBag className="h-4.5 w-4.5" />
-            </div>
-            <div className="text-[10px] leading-tight">
-              <div className="font-bold text-[#7B241C]">
-                {recentOrder.name}
-              </div>
-              <div className="text-gray-500 mt-0.5">
-                From <span className="font-semibold text-gray-700">{recentOrder.city}</span> ordered a Kashi Puja Kit.
-              </div>
-              <div className="text-[9px] text-[#E67E22] font-semibold flex items-center gap-0.5 mt-1">
-                <Flame className="h-3 w-3 fill-[#E67E22]" />
-                <span>{recentOrder.time}</span>
-              </div>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -35,7 +35,7 @@ export default function Testimonials() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-[#D4AF37]/5 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold text-[#E67E22] tracking-widest uppercase block">
@@ -73,7 +73,7 @@ export default function Testimonials() {
                 </div>
 
                 <p className="text-xs md:text-sm text-gray-600 italic leading-relaxed">
-                  "{review.text}"
+                  &ldquo;{review.text}&rdquo;
                 </p>
               </div>
 

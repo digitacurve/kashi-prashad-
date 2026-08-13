@@ -100,22 +100,22 @@ export default function WhatsInside({ onOrderClick }: { onOrderClick: () => void
   const [selectedItem, setSelectedItem] = useState<PujaItem | null>(null);
 
   return (
-    <section id="whats-inside" className="py-24 bg-[#FFF9F0] relative overflow-hidden">
+    <section id="whats-inside" className="py-20 bg-white border-t border-gray-100 relative overflow-hidden">
       {/* Background Decorative Rings */}
       <div className="absolute right-0 top-1/4 w-96 h-96 rounded-full border border-[#D4AF37]/10 -mr-48 pointer-events-none" />
       <div className="absolute left-0 bottom-1/4 w-96 h-96 rounded-full border border-[#D4AF37]/10 -ml-48 pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold text-[#E67E22] tracking-widest uppercase block">
             The Complete Collection
           </span>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-[#7B241C] tracking-wide leading-tight">
-            What's Inside Your Sacred Kit
+          <h2 className="font-serif text-2xl md:text-3xl font-bold text-gray-900 tracking-wide">
+            What&apos;s Inside the Signature Kit
           </h2>
-          <div className="w-24 h-0.5 bg-[#D4AF37] mx-auto mt-4" />
+          <div className="w-12 h-0.5 bg-[#D4AF37] mx-auto mt-2" />
           <p className="text-sm md:text-base text-gray-600">
             A meticulous collection of 10 highly sacred objects, sourced directly from Kashi and Prayagraj, designed to transform your home into a temple.
           </p>
@@ -131,7 +131,7 @@ export default function WhatsInside({ onOrderClick }: { onOrderClick: () => void
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
               whileHover={{ y: -6 }}
-              className="bg-white rounded-2xl border border-[#D4AF37]/20 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+              className="bg-white rounded-xl border border-gray-200 shadow-xs hover:shadow-sm transition-all duration-300 flex flex-col justify-between overflow-hidden group"
             >
               {/* Card Header & Content */}
               <div className="p-6 space-y-4">
@@ -140,7 +140,7 @@ export default function WhatsInside({ onOrderClick }: { onOrderClick: () => void
                     {item.category}
                   </span>
                   {item.tag && (
-                    <span className="text-[10px] text-[#7B241C] font-semibold bg-[#7B241C]/5 border border-[#7B241C]/15 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] text-[#7B241C] font-semibold bg-[#7B241C]/5 border border-[#7B241C]/10 px-2 py-0.5 rounded-full">
                       {item.tag}
                     </span>
                   )}
@@ -162,7 +162,7 @@ export default function WhatsInside({ onOrderClick }: { onOrderClick: () => void
                   <Sparkles className="h-3 w-3 text-[#D4AF37]" />
                   {item.category === "Holy Water" ? "Purifying" : "Sourced in Kashi"}
                 </span>
-                
+
                 <button
                   onClick={() => setSelectedItem(item)}
                   className="text-xs font-semibold text-[#7B241C] hover:text-[#E67E22] flex items-center gap-1 cursor-pointer transition-colors"
@@ -217,7 +217,7 @@ export default function WhatsInside({ onOrderClick }: { onOrderClick: () => void
 
               <div className="space-y-3 text-sm text-gray-700">
                 <p>{selectedItem.desc}</p>
-                
+
                 <div className="bg-[#7B241C]/5 p-3 rounded-lg border border-[#7B241C]/10 space-y-1">
                   <div className="text-xs font-bold text-[#7B241C] flex items-center gap-1">
                     <Compass className="h-3.5 w-3.5" />
