@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Product, ProductVariant } from "@/data/products";
 
 export interface CartItem {
@@ -14,21 +15,13 @@ export interface CartItem {
   quantity: number;
 }
 
-interface CheckoutData {
-  isDirect: boolean;
-  productName: string;
-  selectedVariant: string;
-  price: number;
-  originalPrice: number;
-}
+
 
 interface CartContextType {
   cartItems: CartItem[];
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
-  isCheckoutOpen: boolean;
-  setIsCheckoutOpen: (open: boolean) => void;
-  checkoutData: CheckoutData | null;
+
   addToCart: (product: Product, variant: ProductVariant, quantity?: number) => void;
   removeFromCart: (slug: string, variantId: string) => void;
   updateQuantity: (slug: string, variantId: string, quantity: number) => void;
@@ -36,31 +29,32 @@ interface CartContextType {
   cartCount: number;
   subtotal: number;
   originalSubtotal: number;
-  triggerCheckout: (productName?: string, selectedVariant?: string, price?: number, originalPrice?: number) => void;
+  triggerCheckout: (productSlug: string, variantId: string) => void;
   triggerCartCheckout: () => void;
+  isHydrated: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const router = useRouter();
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("kashi_prasad_cart");
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error("Failed to load cart", e);
+      }
+    }
+    return [];
+  });
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("kashi_prasad_cart");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setTimeout(() => {
-          setCartItems(parsed);
-        }, 0);
-      }
-    } catch (e) {
-      console.error("Failed to load cart", e);
-    }
+    setTimeout(() => setIsHydrated(true), 0);
   }, []);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
 
   // Save cart to localStorage when it changes
   const saveCart = (items: CartItem[]) => {
@@ -124,32 +118,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     saveCart([]);
   };
 
-  const triggerCheckout = (productName?: string, selectedVariant?: string, price?: number, originalPrice?: number) => {
-    if (productName && price && originalPrice) {
-      setCheckoutData({
-        isDirect: true,
-        productName,
-        selectedVariant: selectedVariant || "",
-        price,
-        originalPrice,
-      });
-    } else {
-      setCheckoutData(null);
-    }
+  const triggerCheckout = (productSlug: string, variantId: string) => {
     setIsCartOpen(false);
-    setIsCheckoutOpen(true);
+    router.push(`/checkout?buyNow=true&slug=${productSlug}&variant=${variantId}`);
   };
 
   const triggerCartCheckout = () => {
-    setCheckoutData({
-      isDirect: false,
-      productName: "Cart Items",
-      selectedVariant: "",
-      price: subtotal,
-      originalPrice: originalSubtotal,
-    });
     setIsCartOpen(false);
-    setIsCheckoutOpen(true);
+    router.push("/checkout?buyNow=false");
   };
 
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -162,9 +138,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         cartItems,
         isCartOpen,
         setIsCartOpen,
-        isCheckoutOpen,
-        setIsCheckoutOpen,
-        checkoutData,
+
         addToCart,
         removeFromCart,
         updateQuantity,
@@ -174,6 +148,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         originalSubtotal,
         triggerCheckout,
         triggerCartCheckout,
+        isHydrated,
       }}
     >
       {children}

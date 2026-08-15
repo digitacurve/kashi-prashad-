@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Trash2, Plus, Minus, ShoppingBag, ShieldCheck, Truck } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, ShieldCheck, Truck } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 
@@ -34,12 +34,15 @@ export default function CartDrawer() {
   return (
     <AnimatePresence>
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 flex items-stretch justify-end overflow-hidden">
+        <motion.div
+          key="cart-drawer-root"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-stretch justify-end overflow-hidden"
+        >
           {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
             onClick={() => setIsCartOpen(false)}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
@@ -63,7 +66,7 @@ export default function CartDrawer() {
               </div>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="p-2 rounded-full hover:bg-white/10 text-[#FFF9F0] transition-colors"
+                className="p-1 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
                 aria-label="Close cart"
               >
                 <X className="h-5 w-5" />
@@ -73,35 +76,18 @@ export default function CartDrawer() {
             {/* Cart Items List */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {cartItems.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-12">
-                  <div className="w-16 h-16 rounded-full bg-[#7B241C]/5 flex items-center justify-center text-[#7B241C]">
-                    <ShoppingBag className="h-8 w-8" />
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-serif font-bold text-[#7B241C] text-lg">Your Cart is Empty</h4>
-                    <p className="text-xs text-gray-500 max-w-xs">
-                      Invite auspiciousness into your home by selecting from our Varanasi altar collections.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setIsCartOpen(false);
-                      const el = document.getElementById("product-catalog");
-                      if (el) el.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="px-6 py-2.5 bg-[#7B241C] hover:bg-[#E67E22] text-[#FFF9F0] font-serif font-bold text-xs tracking-wider rounded-lg transition-colors cursor-pointer"
-                  >
-                    BROWSE ALTAR KITS
-                  </button>
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-3 text-gray-500">
+                  <ShoppingBag className="h-12 w-12 text-[#D4AF37]/40" />
+                  <p className="font-serif text-sm">Your cart is empty.</p>
+                  <p className="text-xs">Explore our sacred collections and add items to your cart.</p>
                 </div>
               ) : (
                 cartItems.map((item, idx) => (
                   <div
                     key={`${item.slug}-${item.variantId}-${idx}`}
-                    className="flex gap-4 p-4 bg-white border border-[#D4AF37]/15 rounded-xl shadow-xs"
+                    className="flex gap-4 p-3 bg-white rounded-xl border border-[#D4AF37]/15 shadow-xs"
                   >
-                    {/* Item Image */}
-                    <div className="relative w-20 h-20 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-[#D4AF37]/10">
+                    <div className="relative h-16 w-16 bg-gray-50 rounded-lg overflow-hidden shrink-0 border border-gray-100">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -110,23 +96,22 @@ export default function CartDrawer() {
                       />
                     </div>
 
-                    {/* Item details */}
-                    <div className="flex-grow flex flex-col justify-between">
-                      <div>
-                        <div className="flex justify-between items-start">
-                          <h4 className="font-serif text-sm font-bold text-[#7B241C] leading-snug line-clamp-1">
-                            {item.title}
-                          </h4>
-                          <button
-                            onClick={() => removeFromCart(item.slug, item.variantId)}
-                            className="text-gray-400 hover:text-red-600 transition-colors p-1"
-                            aria-label="Remove item"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start gap-2">
+                        <h4 className="font-serif text-xs md:text-sm font-bold text-[#7B241C] truncate">
+                          {item.title}
+                        </h4>
+                        <button
+                          onClick={() => removeFromCart(item.slug, item.variantId)}
+                          className="text-gray-400 hover:text-red-500 p-0.5 transition-colors cursor-pointer"
+                          aria-label="Remove item"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="text-[10px] text-gray-500">
                         {item.variantName && (
-                          <span className="text-[10px] text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full inline-block mt-0.5">
+                          <span className="block mt-0.5 bg-[#FFF9F0] border border-[#D4AF37]/20 px-2 py-0.5 rounded-sm inline-block">
                             {item.variantName}
                           </span>
                         )}
@@ -155,11 +140,6 @@ export default function CartDrawer() {
                           <span className="font-serif text-sm font-bold text-[#E67E22]">
                             ₹{(item.price * item.quantity).toLocaleString()}
                           </span>
-                          {item.originalPrice > item.price && (
-                            <span className="block text-[10px] line-through text-gray-400">
-                              ₹{(item.originalPrice * item.quantity).toLocaleString()}
-                            </span>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -219,7 +199,7 @@ export default function CartDrawer() {
               </div>
             )}
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

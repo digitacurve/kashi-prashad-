@@ -22,14 +22,13 @@ import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import SpecialFeatures from "@/components/SpecialFeatures";
-import CheckoutModal from "@/components/CheckoutModal";
 import CartDrawer from "@/components/CartDrawer";
 
 import { products, Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
 export default function Home() {
-  const { addToCart, triggerCheckout, isCheckoutOpen, setIsCheckoutOpen } = useCart();
+  const { addToCart, triggerCheckout } = useCart();
 
   // Render marigold petals drifting down
   const marigoldPetals = Array.from({ length: 15 }, (_, i) => {
@@ -367,8 +366,7 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => {
-                    addToCart(prod, defaultVar);
-                    triggerCheckout(prod.title, defaultVar.name, defaultVar.price ?? 0, defaultVar.originalPrice ?? 0);
+                    triggerCheckout(prod.slug, defaultVar.id);
                   }}
                   className="py-1.5 bg-[#7B241C] hover:bg-[#E67E22] text-white font-serif text-[10px] font-bold tracking-wider rounded-md transition-colors cursor-pointer text-center"
                 >
@@ -1165,8 +1163,6 @@ export default function Home() {
       {/* WhatsApp features */}
       <SpecialFeatures onOrderClick={scrollToCatalog} />
 
-      {/* Checkout Drawer Modal */}
-      <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </div>
   );
 }

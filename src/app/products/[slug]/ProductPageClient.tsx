@@ -19,7 +19,6 @@ import {
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CheckoutModal from "@/components/CheckoutModal";
 import DetailedChecklist from "@/components/DetailedChecklist";
 import CartDrawer from "@/components/CartDrawer";
 import WhatsInside from "@/components/WhatsInside";
@@ -39,7 +38,7 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
   const [activeImageIdx, setActiveImageIdx] = useState(0);
 
-  const { addToCart, triggerCheckout, isCheckoutOpen, setIsCheckoutOpen } = useCart();
+  const { addToCart, triggerCheckout } = useCart();
 
   // Reset states during render when product changes (e.g. navigation between kits) to avoid cascading effects
   const [prevProduct, setPrevProduct] = useState(product);
@@ -272,8 +271,7 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
                     </button>
                     <button
                       onClick={() => {
-                        addToCart(product, selectedVariant);
-                        triggerCheckout(product.title, selectedVariant.name, selectedVariant.price!, selectedVariant.originalPrice!);
+                        triggerCheckout(product.slug, selectedVariant.id);
                       }}
                       className="w-full py-4 bg-gradient-to-r from-[#7B241C] to-[#511812] hover:from-[#E67E22] hover:to-[#D35400] text-white font-serif font-bold text-base tracking-wide rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                     >
@@ -515,8 +513,7 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
           {product.slug === "kashi-divine-puja-kit" && (
             <div className="space-y-4">
               <WhatsInside onOrderClick={() => {
-                addToCart(product, selectedVariant);
-                triggerCheckout(product.title, selectedVariant.name, selectedVariant.price!, selectedVariant.originalPrice!);
+                triggerCheckout(product.slug, selectedVariant.id);
               }} />
               <EmotionalSection />
             </div>
@@ -600,15 +597,6 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
       {/* Cart Drawer */}
       <CartDrawer />
 
-      {/* 5. Checkout Drawer Modal */}
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        productName={product.title}
-        selectedVariant={selectedVariant.name}
-        price={selectedVariant.price ?? undefined}
-        originalPrice={selectedVariant.originalPrice ?? undefined}
-      />
     </div>
   );
 }

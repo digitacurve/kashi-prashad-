@@ -11,14 +11,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const { cartCount, setIsCartOpen } = useCart();
+  const { cartCount, setIsCartOpen, isHydrated } = useCart();
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsMounted(true);
-    }, 0);
     const handleScroll = () => {
       if (window.scrollY > 10) {
         setIsScrolled(true);
@@ -170,7 +166,7 @@ export default function Header() {
               aria-label="Open cart drawer"
             >
               <ShoppingBag className="h-5 w-5" />
-              {isMounted && cartCount > 0 && (
+              {isHydrated && cartCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-[#7B241C] text-white font-sans font-bold text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
                   {cartCount}
                 </span>

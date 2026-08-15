@@ -9,26 +9,23 @@ import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 
 export default function ProductCatalog() {
-  const [selectedCategory, setSelectedCategory] = useState(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("category") || "puja-kits";
-    }
-    return "puja-kits";
-  });
-
-  const [searchQuery, setSearchQuery] = useState(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("search") || "";
-    }
-    return "";
-  });
+  const [selectedCategory, setSelectedCategory] = useState("puja-kits");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { addToCart, triggerCheckout } = useCart();
 
   // Listen to custom category filter and search events emitted by the Header
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    if (category) {
+      setTimeout(() => setSelectedCategory(category), 0);
+    }
+    const search = params.get("search");
+    if (search) {
+      setTimeout(() => setSearchQuery(search), 0);
+    }
+
     const handleFilter = (e: Event) => {
       const cat = (e as CustomEvent).detail;
       setSelectedCategory(cat);
@@ -298,8 +295,7 @@ export default function ProductCatalog() {
                               </button>
                               <button
                                 onClick={() => {
-                                  addToCart(prod, defaultVar);
-                                  triggerCheckout(prod.title, defaultVar.name, defaultVar.price!, defaultVar.originalPrice!);
+                                  triggerCheckout(prod.slug, defaultVar.id);
                                 }}
                                 className="py-1.5 bg-[#7B241C] hover:bg-[#E67E22] text-white font-serif text-[10px] font-bold tracking-wider rounded-md transition-colors cursor-pointer text-center"
                               >
