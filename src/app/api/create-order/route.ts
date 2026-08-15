@@ -1,21 +1,24 @@
 import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
 
-// Initialize Razorpay instance lazily or directly using env variables
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "",
-});
-
 export async function POST(request: Request) {
   try {
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
     // Check key credentials first (auth validation)
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    if (!keyId || !keySecret) {
       return NextResponse.json(
         { error: "Razorpay API credentials are not configured" },
         { status: 401 }
       );
     }
+
+    // Initialize Razorpay instance lazily after credentials are validated
+    const razorpay = new Razorpay({
+      key_id: keyId,
+      key_secret: keySecret,
+    });
 
     const body = await request.json();
     const { amount, currency, receipt } = body;

@@ -542,14 +542,14 @@ export default function Home() {
               {/* Headline */}
               <div className="space-y-4">
                 <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wide text-white leading-[1.12]">
-                  Welcome Kashi's <span className="text-[#E67E22] bg-gradient-to-r from-[#E67E22] via-[#F1C40F] to-[#E67E22] bg-clip-text text-transparent">Divine Energies</span> Into Your Home
+                  Welcome Kashi&apos;s <span className="text-[#E67E22] bg-gradient-to-r from-[#E67E22] via-[#F1C40F] to-[#E67E22] bg-clip-text text-transparent">Divine Energies</span> Into Your Home
                 </h1>
                 <div className="w-20 h-0.5 bg-[#D4AF37] mx-auto lg:mx-0" />
               </div>
 
               {/* Paragraph */}
               <p className="text-xs sm:text-sm md:text-base text-gray-200 leading-relaxed font-light max-w-xl mx-auto lg:mx-0">
-                Experience Varanasi's spiritual resonance. Connect with Shiva's holy city through authentic temple offerings, certified gemstones, and ritual essentials sanctified on the banks of holy Ganga.
+                Experience Varanasi&apos;s spiritual resonance. Connect with Shiva&apos;s holy city through authentic temple offerings, certified gemstones, and ritual essentials sanctified on the banks of holy Ganga.
               </p>
 
               {/* Bullet list */}
