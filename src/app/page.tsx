@@ -383,7 +383,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Sticky Header Container */}
-      <div className="sticky top-0 z-40 w-full">
+      <div className="sticky top-0 z-[100] w-full">
         {/* Announcement Bar */}
         <OfferCountdown />
 
@@ -1161,7 +1161,7 @@ export default function Home() {
       <CartDrawer />
 
       {/* WhatsApp features */}
-      <SpecialFeatures onOrderClick={scrollToCatalog} />
+      <SpecialFeatures />
 
     </div>
   );

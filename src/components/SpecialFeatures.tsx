@@ -2,30 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Phone, ArrowUp, ShoppingBag, Sparkles } from "lucide-react";
+import { MessageSquare, Phone, ArrowUp } from "lucide-react";
 
-interface SpecialFeaturesProps {
-  onOrderClick: () => void;
-}
-
-export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) {
+export default function SpecialFeatures() {
   // Back to Top State
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // Sticky Bottom Bar State
-  const [showStickyBar, setShowStickyBar] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       // Show back to top if scrolled past 300px
       setShowScrollTop(window.scrollY > 300);
-
-      // Show sticky bar if scrolled past 600px on mobile
-      if (window.innerWidth < 768) {
-        setShowStickyBar(window.scrollY > 600);
-      } else {
-        setShowStickyBar(false);
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -86,35 +72,7 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
         </a>
       </div>
 
-      {/* Sticky Bottom Checkout Bar (Mobile Only) */}
-      <AnimatePresence>
-        {showStickyBar && (
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#D4AF37]/30 shadow-2xl p-3 md:hidden flex items-center justify-between gap-3 px-4"
-          >
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-serif font-bold text-base text-[#7B241C]">₹1,499</span>
-                <span className="line-through text-[10px] text-gray-400">₹2,999</span>
-              </div>
-              <span className="text-[9px] text-[#E67E22] font-semibold bg-[#E67E22]/10 px-2 py-0.5 rounded-full block mt-0.5">
-                50% OFF + Free Prasad
-              </span>
-            </div>
-            
-            <button
-              onClick={onOrderClick}
-              className="flex-1 py-3 bg-[#7B241C] hover:bg-[#E67E22] text-white font-serif font-bold text-xs tracking-wider rounded-lg shadow-md flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              <span>ORDER NOW (COD)</span>
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
     </>
   );
 }

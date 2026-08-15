@@ -58,7 +58,7 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* 2. Sticky Header */}
-      <div className="sticky top-0 z-40 w-full">
+      <div className="sticky top-0 z-[100] w-full">
         <Header />
       </div>
 

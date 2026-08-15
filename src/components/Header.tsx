@@ -57,6 +57,26 @@ export default function Header() {
     }
   };
 
+  const handleScrollToId = (id: string) => {
+    setIsOpen(false);
+    if (typeof window !== "undefined" && window.location.pathname !== "/") {
+      router.push(`/#${id}`);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 140; // Avoid header overlap
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }
+  };
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsOpen(false);
@@ -83,7 +103,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`relative w-full z-40 transition-all duration-200 h-16 bg-white border-b border-gray-200 flex items-center ${
+        className={`relative w-full z-[100] transition-all duration-200 h-16 bg-white border-b border-gray-200 flex items-center ${
           isScrolled ? "shadow-sm" : ""
         }`}
       >
@@ -145,13 +165,8 @@ export default function Header() {
             {/* Quick Track Order Link */}
             <button
               onClick={() => {
-                // Dispatch event to open Track Order modal inside Footer
-                const footer = document.querySelector("footer");
-                if (footer) footer.scrollIntoView({ behavior: "smooth" });
-                // Emit event to open the track modal directly
-                setTimeout(() => {
-                  window.dispatchEvent(new CustomEvent("open-policy-track"));
-                }, 500);
+                setIsOpen(false);
+                router.push("/track-order");
               }}
               className="hidden sm:flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-gray-500 hover:text-[#7B241C] transition-colors cursor-pointer"
             >
@@ -192,7 +207,7 @@ export default function Header() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-16 left-0 right-0 z-40 border-b border-gray-200 bg-white shadow-lg overflow-hidden lg:hidden"
+              className="absolute top-16 left-0 right-0 z-[100] border-b border-gray-200 bg-white shadow-lg overflow-hidden lg:hidden"
             >
               <div className="px-4 py-4 flex flex-col gap-3">
                 {/* Mobile Search Form */}
@@ -220,14 +235,25 @@ export default function Header() {
                       {cat.name}
                     </button>
                   ))}
+                  
+                  {/* Shop Collection & Explore Categories CTAs inside mobile menu */}
+                  <button
+                    onClick={() => handleScrollToId("product-catalog")}
+                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
+                  >
+                    Shop Collection
+                  </button>
+                  <button
+                    onClick={() => handleScrollToId("shop-categories")}
+                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
+                  >
+                    Explore Categories
+                  </button>
+
                   <button
                     onClick={() => {
                       setIsOpen(false);
-                      const footer = document.querySelector("footer");
-                      if (footer) footer.scrollIntoView({ behavior: "smooth" });
-                      setTimeout(() => {
-                        window.dispatchEvent(new CustomEvent("open-policy-track"));
-                      }, 500);
+                      router.push("/track-order");
                     }}
                     className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-500 hover:text-[#7B241C] transition-colors cursor-pointer flex items-center gap-1.5"
                   >
