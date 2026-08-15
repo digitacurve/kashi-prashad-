@@ -51,6 +51,8 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
     setActiveFAQ(null);
   }
 
+  const isGemstone = product.category === "Ratnas";
+
   // Recommendations (all other products in catalog)
   const recommendations = allProducts.filter((p) => p.slug !== product.slug);
 
@@ -82,7 +84,11 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
                   alt={product.images[activeImageIdx]?.alt || product.title}
                   fill
                   priority
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className={
+                    isGemstone
+                      ? "object-contain p-8 bg-[#FFF9F0]/50 transition-transform duration-700 group-hover:scale-105"
+                      : "object-cover transition-transform duration-700 group-hover:scale-105"
+                  }
                 />
 
                 {/* Floating Badge */}
@@ -109,7 +115,11 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
                       src={img.src}
                       alt={img.alt}
                       fill
-                      className="object-cover"
+                      className={
+                        isGemstone
+                          ? "object-contain p-2 bg-[#FFF9F0]/30"
+                          : "object-cover"
+                      }
                     />
                   </button>
                 ))}
@@ -528,7 +538,11 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
                         src={rec.images[0]?.src || "/images/hero_puja_kit.png"}
                         alt={rec.title}
                         fill
-                        className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        className={
+                          rec.category === "Ratnas"
+                            ? "object-contain p-6 bg-[#FFF9F0]/50 group-hover:scale-[1.05] transition-transform duration-700"
+                            : "object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                        }
                       />
                       <div className="absolute top-3 left-3 bg-[#7B241C] text-[#FFF9F0] text-[9px] font-bold tracking-wider px-2 py-0.5 rounded border border-[#D4AF37]/35 uppercase">
                         {rec.badge}

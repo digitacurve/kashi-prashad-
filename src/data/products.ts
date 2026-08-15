@@ -5955,30 +5955,30 @@ const extraCategoriesData = [
   {
     category: "Temple Prasad",
     items: [
-      { slug: "prasad-pedas", title: "Kashi Vishwanath Temple Peda Prasad", image: "/images/temple_prasad_box.png" },
+      { slug: "prasad-pedas", title: "Kashi Vishwanath Temple Peda Prasad", image: "/images/individual/pedas_prasad.jpg" },
       { slug: "prasad-bhabhuti", title: "Kaal Bhairav Temple Sacred Bhabhuti", image: "/images/temple_prasad_box.png" }
     ]
   },
   {
     category: "Gangajal",
     items: [
-      { slug: "gangajal-copper", title: "Varanasi Mid-Stream Gangajal (Copper Vial)", image: "/images/puja_kit_packaging.png" },
-      { slug: "gangajal-sangam", title: "Prayagraj Triveni Sangam Holy Water", image: "/images/puja_kit_packaging.png" }
+      { slug: "gangajal-copper", title: "Varanasi Mid-Stream Gangajal (Copper Vial)", image: "/images/individual/gangajal_bottle.jpg" },
+      { slug: "gangajal-sangam", title: "Prayagraj Triveni Sangam Holy Water", image: "/images/individual/gangajal_bottle.jpg" }
     ]
   },
   {
     category: "Agarbatti",
     items: [
-      { slug: "agarbatti-kasturi", title: "Sacred Kasturi Incense Sticks", image: "/images/puja_kit_packaging.png" },
-      { slug: "agarbatti-dhoop", title: "Varanasi Sandalwood Dhoop Cones", image: "/images/puja_kit_packaging.png" }
+      { slug: "agarbatti-kasturi", title: "Sacred Kasturi Incense Sticks", image: "/images/individual/incense_sticks.jpg" },
+      { slug: "agarbatti-dhoop", title: "Varanasi Sandalwood Dhoop Cones", image: "/images/individual/incense_sticks.jpg" }
     ]
   },
   {
     category: "Temple Accessories",
     items: [
-      { slug: "acc-bell", title: "Brass Temple Bell (Nandi Engraved)", image: "/images/hero_puja_kit.png" },
-      { slug: "acc-diya", title: "Brass Akhand Diya (Glass Cover)", image: "/images/hero_puja_kit.png" },
-      { slug: "acc-incense", title: "Incense Stand (Brass Leaf Shape)", image: "/images/hero_puja_kit.png" }
+      { slug: "acc-bell", title: "Brass Temple Bell (Nandi Engraved)", image: "/images/individual/brass_bell.jpg" },
+      { slug: "acc-diya", title: "Brass Akhand Diya (Glass Cover)", image: "/images/individual/brass_diya.jpg" },
+      { slug: "acc-incense", title: "Incense Stand (Brass Leaf Shape)", image: "/images/individual/incense_sticks.jpg" }
     ]
   },
   {

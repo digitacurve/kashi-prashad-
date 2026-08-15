@@ -180,6 +180,8 @@ export default function ProductCatalog() {
                     ((defaultVar.originalPrice - defaultVar.price!) / defaultVar.originalPrice) * 100
                   ) : 0;
 
+                  const isGemstone = prod.category === "Ratnas";
+
                   return (
                     <motion.div
                       key={prod.slug}
@@ -195,7 +197,11 @@ export default function ProductCatalog() {
                           fill
                           sizes="(max-w-768px) 100vw, 33vw"
                           loading="lazy"
-                          className="object-cover group-hover:scale-102 transition-transform duration-500"
+                          className={
+                            isGemstone
+                              ? "object-contain p-6 bg-[#FFF9F0]/50 group-hover:scale-105 transition-transform duration-500"
+                              : "object-cover group-hover:scale-102 transition-transform duration-500"
+                          }
                         />
                         {prod.badge && (
                           <div className="absolute top-3 left-3 z-10">

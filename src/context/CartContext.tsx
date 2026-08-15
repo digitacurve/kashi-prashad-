@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { Product, ProductVariant } from "@/data/products";
 
 export interface CartItem {
@@ -43,18 +43,22 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const stored = localStorage.getItem("kashi_prasad_cart");
-        return stored ? JSON.parse(stored) : [];
-      } catch (e) {
-        console.error("Failed to load cart", e);
-      }
-    }
-    return [];
-  });
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("kashi_prasad_cart");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setTimeout(() => {
+          setCartItems(parsed);
+        }, 0);
+      }
+    } catch (e) {
+      console.error("Failed to load cart", e);
+    }
+  }, []);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [checkoutData, setCheckoutData] = useState<CheckoutData | null>(null);
 
@@ -132,6 +136,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } else {
       setCheckoutData(null);
     }
+    setIsCartOpen(false);
     setIsCheckoutOpen(true);
   };
 
@@ -143,6 +148,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       price: subtotal,
       originalPrice: originalSubtotal,
     });
+    setIsCartOpen(false);
     setIsCheckoutOpen(true);
   };
 

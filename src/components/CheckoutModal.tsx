@@ -6,6 +6,33 @@ import { X, Shield, Truck, Sparkles, CheckCircle, ShoppingBag } from "lucide-rea
 import confetti from "canvas-confetti";
 import { useCart } from "@/context/CartContext";
 
+interface RazorpaySuccessResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
+interface RazorpayFailedResponse {
+  error: {
+    code: string;
+    description: string;
+    source: string;
+    step: string;
+    reason: string;
+    metadata: {
+      order_id: string;
+      payment_id: string;
+    };
+  };
+}
+
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Razorpay: any;
+  }
+}
+
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -37,15 +64,20 @@ export default function CheckoutModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      // Clear errors asynchronously to avoid React render loop warning
+      timer = setTimeout(() => setPaymentError(null), 0);
     } else {
       document.body.style.overflow = "unset";
     }
     return () => {
       document.body.style.overflow = "unset";
+      if (timer) clearTimeout(timer);
     };
   }, [isOpen]);
 
@@ -54,7 +86,7 @@ export default function CheckoutModal({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.address || !formData.pincode) {
       alert("Please fill in all required fields.");
@@ -62,33 +94,169 @@ export default function CheckoutModal({
     }
 
     setIsSubmitting(true);
+    setPaymentError(null);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setOrderId("KDPK-" + Math.floor(100000 + Math.random() * 900000));
+    const isDirect = checkoutData?.isDirect ?? true;
+    const checkoutItems = isDirect
+      ? [
+          {
+            price: checkoutData?.price ?? price,
+            quantity: 1,
+          },
+        ]
+      : cartItems.map((item) => ({
+          price: item.price,
+          quantity: item.quantity,
+        }));
 
-      // If we checked out the cart, clear it
-      const isDirect = checkoutData?.isDirect ?? true;
-      if (!isDirect) {
-        clearCart();
+    const finalPrice = checkoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    if (formData.paymentMethod === "cod") {
+      // Simulate API call for COD
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setOrderId("KDPK-" + Math.floor(100000 + Math.random() * 900000));
+
+        if (!isDirect) {
+          clearCart();
+        }
+
+        // Fire confetti
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ["#E67E22", "#7B241C", "#D4AF37", "#FFF9F0"],
+        });
+      }, 1500);
+    } else {
+      // Razorpay Online Payment Flow
+      try {
+        const amountInPaise = finalPrice * 100;
+        
+        // 1. Create order on the backend
+        const res = await fetch("/api/create-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: amountInPaise,
+            currency: "INR",
+            receipt: `receipt_checkout_${Date.now()}`,
+          }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || "Failed to generate Razorpay order ID");
+        }
+
+        const orderData = await res.json();
+        const { order_id } = orderData;
+
+        // Verify Razorpay SDK is loaded
+        if (!window.Razorpay) {
+          throw new Error("Razorpay SDK could not be loaded. Check your connection.");
+        }
+
+        // 2. Configure and open Razorpay modal
+        const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+        const options = {
+          key: keyId,
+          amount: amountInPaise,
+          currency: "INR",
+          name: "Kashi Divine Puja Kit",
+          description: productName + (selectedVariant ? ` - ${selectedVariant}` : ""),
+          image: "/images/hero_puja_kit.png",
+          order_id: order_id,
+          handler: async function (response: RazorpaySuccessResponse) {
+            try {
+              setIsSubmitting(true);
+              
+              // 3. Verify signature on the backend
+              const verifyRes = await fetch("/api/verify-payment", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
+              });
+
+              if (!verifyRes.ok) {
+                const verifyErr = await verifyRes.json();
+                throw new Error(verifyErr.error || "Payment signature verification failed");
+              }
+
+              // Payment verification succeeded!
+              setIsSuccess(true);
+              setOrderId(response.razorpay_order_id);
+              
+              if (!isDirect) {
+                clearCart();
+              }
+
+              // Fire confetti
+              confetti({
+                particleCount: 150,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ["#E67E22", "#7B241C", "#D4AF37", "#FFF9F0"],
+              });
+            } catch (err: unknown) {
+              const errorObj = err as Error;
+              console.error("Verification error:", errorObj);
+              setPaymentError(errorObj.message || "Failed to verify signature");
+            } finally {
+              setIsSubmitting(false);
+            }
+          },
+          prefill: {
+            name: formData.name,
+            contact: formData.phone,
+          },
+          notes: {
+            address: formData.address,
+            city: formData.city,
+            pincode: formData.pincode,
+          },
+          theme: {
+            color: "#7B241C",
+          },
+          modal: {
+            ondismiss: function () {
+              setIsSubmitting(false);
+              setPaymentError("Payment process cancelled by the user.");
+            },
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        
+        rzp.on("payment.failed", function (response: RazorpayFailedResponse) {
+          setIsSubmitting(false);
+          setPaymentError("Payment failed: " + response.error.description);
+        });
+
+        rzp.open();
+      } catch (err: unknown) {
+        const errorObj = err as Error;
+        console.error("Online payment checkout initialization error:", errorObj);
+        setPaymentError(errorObj.message || "Failed to initialize payment gateway");
+        setIsSubmitting(false);
       }
-
-      // Fire confetti
-      confetti({
-        particleCount: 150,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ["#E67E22", "#7B241C", "#D4AF37", "#FFF9F0"],
-      });
-    }, 1500);
+    }
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-end overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-stretch justify-end overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -104,7 +272,7 @@ export default function CheckoutModal({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative z-10 w-full max-w-lg h-full bg-[#FFF9F0] text-[#222222] shadow-2xl flex flex-col border-l border-[#D4AF37]/30"
+            className="relative z-10 w-full max-w-lg h-screen max-h-screen bg-[#FFF9F0] text-[#222222] shadow-2xl flex flex-col border-l border-[#D4AF37]/30"
           >
             {/* Header */}
             <div className="p-6 border-b border-[#7B241C]/10 flex items-center justify-between bg-[#7B241C] text-[#FFF9F0]">
@@ -374,6 +542,13 @@ export default function CheckoutModal({
                     </div>
                   </div>
 
+                  {/* Payment Error Display */}
+                  {paymentError && (
+                    <div className="bg-red-50 text-red-700 p-3.5 rounded-xl border border-red-200 text-xs text-center font-medium shadow-sm">
+                      {paymentError}
+                    </div>
+                  )}
+
                   {/* Submit Button */}
                   <button
                     type="submit"
@@ -383,11 +558,11 @@ export default function CheckoutModal({
                     {isSubmitting ? (
                       <span className="flex items-center justify-center gap-2">
                         <span className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
-                        Invoking Blessings...
+                        {formData.paymentMethod === "online" ? "Opening Payment Gateway..." : "Invoking Blessings..."}
                       </span>
                     ) : (
                       <span className="flex items-center justify-center gap-2">
-                        <span>CONFIRM SACRED ORDER</span>
+                        <span>{formData.paymentMethod === "online" ? "PROCEED TO SECURE PAYMENT" : "CONFIRM SACRED ORDER"}</span>
                         <Sparkles className="h-5 w-5 text-[#D4AF37] group-hover:scale-125 transition-transform" />
                       </span>
                     )}
@@ -429,6 +604,7 @@ export default function CheckoutModal({
                   <button
                     onClick={() => {
                       setIsSuccess(false);
+                      setPaymentError(null);
                       setFormData({
                         name: "",
                         phone: "",

@@ -15,10 +15,6 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
   // Sticky Bottom Bar State
   const [showStickyBar, setShowStickyBar] = useState(false);
 
-  // Exit Intent State
-  const [showExitIntent, setShowExitIntent] = useState(false);
-  const [hasTriggeredExitIntent, setHasTriggeredExitIntent] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       // Show back to top if scrolled past 300px
@@ -32,22 +28,12 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
       }
     };
 
-    // Exit Intent detection (mouse leaves viewport)
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY < 5 && !hasTriggeredExitIntent) {
-        setShowExitIntent(true);
-        setHasTriggeredExitIntent(true);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
-    document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [hasTriggeredExitIntent]);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -127,72 +113,6 @@ export default function SpecialFeatures({ onOrderClick }: SpecialFeaturesProps) 
               <span>ORDER NOW (COD)</span>
             </button>
           </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Exit Intent Popup */}
-      <AnimatePresence>
-        {showExitIntent && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowExitIntent(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            />
-
-            {/* Modal Dialog */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#FFF9F0] border-2 border-[#D4AF37] rounded-2xl p-6 md:p-8 max-w-md w-full relative z-10 shadow-2xl text-center space-y-6"
-            >
-              <div className="w-16 h-16 rounded-full bg-[#7B241C]/5 border border-[#D4AF37]/40 flex items-center justify-center text-[#E67E22] mx-auto">
-                <Sparkles className="h-8 w-8 animate-pulse" />
-              </div>
-
-              <div className="space-y-2">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#E67E22] bg-[#E67E22]/10 px-3 py-1 rounded-full">
-                  Wait, Devotee!
-                </span>
-                <h3 className="font-serif text-2xl font-bold text-[#7B241C] tracking-wide mt-2">
-                  Special Mahadev Blessing
-                </h3>
-                <p className="text-xs text-gray-600 max-w-xs mx-auto leading-relaxed">
-                  Do not leave empty-handed. Place your order now and receive a <strong>FREE Kaal Bhairav Raksha Sutra</strong> thread to protect your home.
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-4 border border-[#D4AF37]/25 max-w-xs mx-auto">
-                <div className="text-[10px] text-gray-400 font-medium">LOCKED PRICE</div>
-                <div className="font-serif text-xl font-bold text-[#7B241C] mt-1">₹1,499</div>
-                <div className="text-[9px] text-[#E67E22] font-semibold mt-1">
-                  FREE SOUVENIRS + FREE SHIPPING
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setShowExitIntent(false);
-                    onOrderClick();
-                  }}
-                  className="flex-1 py-3 bg-[#7B241C] hover:bg-[#E67E22] text-[#FFF9F0] text-center font-serif text-xs font-bold tracking-wider rounded-lg shadow-md transition-colors cursor-pointer"
-                >
-                  CLAIM BLESSING & ORDER
-                </button>
-                <button
-                  onClick={() => setShowExitIntent(false)}
-                  className="px-4 py-3 bg-white border border-[#7B241C]/20 hover:border-[#7B241C] text-gray-700 text-xs font-bold rounded-lg transition-colors cursor-pointer"
-                >
-                  No, thanks
-                </button>
-              </div>
-            </motion.div>
-          </div>
         )}
       </AnimatePresence>
     </>

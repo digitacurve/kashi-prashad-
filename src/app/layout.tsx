@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Outfit } from "next/font/google";
 import Providers from "@/components/Providers";
+import Script from "next/script";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -63,6 +64,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[#FFF9F0] text-[#222222] font-sans flex flex-col">
         <Providers>{children}</Providers>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
   );
