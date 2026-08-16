@@ -42,39 +42,43 @@ export default function Header() {
     } else {
       const event = new CustomEvent("filter-category", { detail: catSlug });
       window.dispatchEvent(event);
-      const el = document.getElementById("product-catalog");
-      if (el) {
-        const offset = 140; // Avoid header overlap
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
+      setTimeout(() => {
+        const el = document.getElementById("product-catalog");
+        if (el) {
+          const offset = 140; // Avoid header overlap
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 100);
     }
   };
 
   const handleScrollToId = (id: string) => {
     setIsOpen(false);
-    if (typeof window !== "undefined" && window.location.pathname !== "/") {
-      router.push(`/#${id}`);
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        const offset = 140; // Avoid header overlap
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
+    setTimeout(() => {
+      if (typeof window !== "undefined" && window.location.pathname !== "/") {
+        router.push(`/#${id}`);
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          const offset = 140; // Avoid header overlap
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = el.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
       }
-    }
+    }, 100);
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -198,74 +202,74 @@ export default function Header() {
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation Drawer */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-16 left-0 right-0 z-[100] border-b border-gray-200 bg-white shadow-lg overflow-hidden lg:hidden"
-            >
-              <div className="px-4 py-4 flex flex-col gap-3">
-                {/* Mobile Search Form */}
-                <form onSubmit={handleSearchSubmit} className="relative w-full">
-                  <input
-                    type="text"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Search sacred items..."
-                    className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md outline-none text-xs focus:bg-white focus:border-gray-400"
-                  />
-                  <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                    <Search className="h-4 w-4" />
-                  </button>
-                </form>
-
-                {/* Mobile Categories Links */}
-                <div className="flex flex-col divide-y divide-gray-100">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.slug}
-                      onClick={() => handleCategoryClick(cat.slug)}
-                      className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
-                    >
-                      {cat.name}
-                    </button>
-                  ))}
-                  
-                  {/* Shop Collection & Explore Categories CTAs inside mobile menu */}
-                  <button
-                    onClick={() => handleScrollToId("product-catalog")}
-                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
-                  >
-                    Shop Collection
-                  </button>
-                  <button
-                    onClick={() => handleScrollToId("shop-categories")}
-                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
-                  >
-                    Explore Categories
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      router.push("/track-order");
-                    }}
-                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-500 hover:text-[#7B241C] transition-colors cursor-pointer flex items-center gap-1.5"
-                  >
-                    <FileText className="h-4 w-4" />
-                    <span>Track Order</span>
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </header>
+
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 right-0 z-[100] border-b border-gray-200 bg-white shadow-lg overflow-hidden lg:hidden"
+          >
+            <div className="px-4 py-4 flex flex-col gap-3">
+              {/* Mobile Search Form */}
+              <form onSubmit={handleSearchSubmit} className="relative w-full">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Search sacred items..."
+                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-md outline-none text-xs focus:bg-white focus:border-gray-400"
+                />
+                <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <Search className="h-4 w-4" />
+                </button>
+              </form>
+
+              {/* Mobile Categories Links */}
+              <div className="flex flex-col divide-y divide-gray-100">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.slug}
+                    onClick={() => handleCategoryClick(cat.slug)}
+                    className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+                
+                {/* Shop Collection & Explore Categories CTAs inside mobile menu */}
+                <button
+                  onClick={() => handleScrollToId("product-catalog")}
+                  className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
+                >
+                  Shop Collection
+                </button>
+                <button
+                  onClick={() => handleScrollToId("shop-categories")}
+                  className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-700 hover:text-[#7B241C] transition-colors cursor-pointer"
+                >
+                  Explore Categories
+                </button>
+
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push("/track-order");
+                  }}
+                  className="text-left font-sans text-xs font-bold uppercase tracking-wider py-3 text-gray-500 hover:text-[#7B241C] transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <FileText className="h-4 w-4" />
+                  <span>Track Order</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
