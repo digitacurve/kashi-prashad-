@@ -212,17 +212,28 @@ export default function ProductPageClient({ product, allProducts }: ProductPageC
                       <span className="font-semibold text-[#7B241C]">Choose Kit Variant:</span>
                       <span className="text-gray-500 italic font-medium">Suitable for: {selectedVariant.suitableFor}</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className={`grid gap-3 ${product.variants.length === 2 || product.variants.length === 4 ? "grid-cols-2" : "grid-cols-3"}`}>
                       {product.variants.map((v) => (
                         <button
                           key={v.id}
                           onClick={() => setSelectedVariant(v)}
-                          className={`p-3 rounded-xl border-2 text-left cursor-pointer transition-all ${selectedVariant.id === v.id
-                              ? "border-[#E67E22] bg-[#E67E22]/5 shadow-sm"
-                              : "border-gray-200 bg-white hover:border-[#D4AF37]/50"
-                            }`}
+                          className={`p-3 rounded-xl border-2 text-left cursor-pointer transition-all relative ${
+                            selectedVariant.id === v.id
+                              ? v.badge === "Kashi Prasad"
+                                ? "border-[#D4AF37] bg-[#FFF9F0] shadow-sm ring-1 ring-[#D4AF37]/35"
+                                : "border-[#E67E22] bg-[#E67E22]/5 shadow-sm"
+                              : v.badge === "Kashi Prasad"
+                                ? "border-[#D4AF37]/45 bg-white hover:border-[#D4AF37]"
+                                : "border-gray-200 bg-white hover:border-[#D4AF37]/50"
+                          }`}
                         >
-                          <div className="font-serif font-bold text-xs md:text-sm text-[#7B241C]">{v.name}</div>
+                          {v.badge === "Kashi Prasad" && (
+                            <span className="absolute -top-2 right-2 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-white text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider shadow-xs flex items-center gap-0.5 z-10">
+                              <Sparkles className="h-2.5 w-2.5 fill-white text-white" />
+                              <span>Kashi Prasad</span>
+                            </span>
+                          )}
+                          <div className="font-serif font-bold text-xs md:text-sm text-[#7B241C] pr-10">{v.name}</div>
                           <div className="text-xs font-bold text-[#E67E22] mt-1">
                             {v.price === null ? "Coming Soon" : `₹${v.price.toLocaleString()}`}
                           </div>

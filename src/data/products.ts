@@ -5826,6 +5826,693 @@ const rudrakshaProducts: Product[] = [
 const malaProducts: Product[] = Array.from({ length: 15 }, (_, i) => {
   const idx = i + 1;
   const padIdx = String(idx).padStart(2, "0");
+  if (idx === 1) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Karungali Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Karungali", "Ebony Wood", "Kashi Prasad"],
+      seoTitle: `Karungali Mala – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `Crafted from Karungali wood (Black Ebony), this traditional 108-bead mala is respectfully offered to the divine as a Kashi Prasad before shipping.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Karungali Mala – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Karungali Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Crafted from Karungali wood, also known as Black Ebony, this traditional mala is valued for its natural beauty, durability, and spiritual significance. It is traditionally used for meditation, prayer, and spiritual practices. You can choose the mala without Divine Offering for ₹799, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+      longDescription: [
+        "Crafted from Karungali wood, also known as Black Ebony, this traditional mala is valued for its natural beauty, durability, and spiritual significance. It is traditionally used for meditation, prayer, and spiritual practices.",
+        "You can choose the mala without Divine Offering for ₹799, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 799,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & meditation",
+          description: "Crafted from Karungali wood, also known as Black Ebony, this traditional mala is valued for its natural beauty, durability, and spiritual significance. It is traditionally used for meditation, prayer, and spiritual practices. You can choose the mala without Divine Offering for ₹799, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+          keyIncludes: ["Authentic Karungali Wood", "108 Beads", "Varanasi Purified"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 999,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Crafted from Karungali wood, also known as Black Ebony, this traditional mala is valued for its natural beauty, durability, and spiritual significance. It is traditionally used for meditation, prayer, and spiritual practices. You can choose the mala without Divine Offering for ₹799, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+          keyIncludes: ["Authentic Karungali Wood", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Karungali Wood (Black Ebony)" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 2) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "5 Mukhi Rudraksha Mala – 7mm, 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Rudraksha", "Varanasi Sourced", "Kashi Prasad"],
+      seoTitle: "5 Mukhi Rudraksha Mala (108 Beads) Blessed in Varanasi | Kashi Prasad",
+      metaDescription: "Authentic 5 Mukhi Rudraksha Japa Mala (108 beads, 7mm) from Varanasi. Available with sacred temple offering options.",
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: "5 Mukhi Rudraksha Mala - On Altar Box"
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: "5 Mukhi Rudraksha Mala - Details & Packaging"
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Made with authentic 5 Mukhi Rudraksha beads, this 108 bead mala is traditionally used for meditation, prayer, and spiritual practices. Choose a regular mala at ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad at ₹1,200.",
+      longDescription: [
+        "Made with authentic 5 Mukhi Rudraksha beads, this 108 bead mala is traditionally used for meditation, prayer, and spiritual practices.",
+        "Choose a regular mala at ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad at ₹1,200."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-default`,
+          name: "Without Divine Offering",
+          price: 899,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal use & daily chanting",
+          description: "Made with authentic 5 Mukhi Rudraksha beads, this 108 bead mala is traditionally used for meditation, prayer, and spiritual practices. The mala is provided without being offered to the divine.",
+          keyIncludes: ["Authentic 5 Mukhi Rudraksha", "108 Sacred Beads", "7mm Bead Diameter"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-kashi-prasad`,
+          name: "Offered to the Divine (Kashi Prasad)",
+          price: 1200,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Made with authentic 5 Mukhi Rudraksha beads, this 108 bead mala is traditionally used for meditation, prayer, and spiritual practices. The mala is respectfully offered to the divine before being sent to the customer, and is received as Kashi Prasad carrying the sacred blessings and spiritual essence of Kashi.",
+          keyIncludes: ["Authentic 5 Mukhi Rudraksha", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Bead Type", value: "Authentic 5 Mukhi Rudraksha" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Bead Size", value: "7 mm" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 3) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Tulsi Japa Mala",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Tulsi", "Varanasi Sourced", "Kashi Prasad"],
+      seoTitle: "Tulsi Japa Mala Blessed in Varanasi | Kashi Prasad",
+      metaDescription: "Authentic Japa Mala crafted from sacred Tulsi wood. Available with Kashi Prasad divine offering options.",
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: "Tulsi Japa Mala - On Altar Box"
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: "Tulsi Japa Mala - Details & Packaging"
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Crafted from sacred Tulsi wood, this traditional Japa Mala is used for mantra chanting, meditation, prayer, and spiritual practice. Tulsi wood is deeply revered in Hindu tradition and is associated with purity, devotion, and spiritual significance.",
+      longDescription: [
+        "Crafted from sacred Tulsi wood, this traditional Japa Mala is used for mantra chanting, meditation, prayer, and spiritual practice.",
+        "Tulsi wood is deeply revered in Hindu tradition and is associated with purity, devotion, and spiritual significance."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-default`,
+          name: "Without Divine Offering",
+          price: 799,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal mantra chanting & Japa",
+          description: "Crafted from sacred Tulsi wood, this traditional Japa Mala is used for mantra chanting, meditation, prayer, and spiritual practice. The mala is provided without being offered to the divine.",
+          keyIncludes: ["Sacred Tulsi Wood", "108 Chanting Beads", "Revered Purity & Devotion"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-kashi-prasad`,
+          name: "Offered to the Divine (Kashi Prasad)",
+          price: 1200,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & devotion",
+          description: "Crafted from sacred Tulsi wood, this traditional Japa Mala is used for mantra chanting, meditation, prayer, and spiritual practice. The mala is respectfully offered to the divine before being sent to the customer and is then delivered as sacred Kashi Prasad.",
+          keyIncludes: ["Sacred Tulsi Wood", "Offered to Varanasi Deities", "Delivered as Kashi Prasad"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Sacred Tulsi Wood" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your Tulsi Japa Mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 4) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Sphatik Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Sphatik", "Varanasi Sourced", "Kashi Prasad"],
+      seoTitle: "Sphatik Mala (108 Beads) Blessed in Varanasi | Kashi Prasad",
+      metaDescription: "Authentic Sphatik (crystal quartz) Japa Mala (108 beads) from Varanasi. Available with sacred temple offering options.",
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: "Sphatik Mala - On Altar Box"
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: "Sphatik Mala - Details & Packaging"
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices. Choose your preferred variant and optionally have the mala respectfully offered to the divine before it is sent to you.",
+      longDescription: [
+        "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices.",
+        "Choose your preferred variant and optionally have the mala respectfully offered to the divine before it is sent to you."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-std-regular`,
+          name: "Standard (Variant 1) – Without Offering",
+          price: 1300,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal meditation & chanting",
+          description: "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices. This standard variant is provided without being offered to the divine.",
+          keyIncludes: ["Natural Sphatik Crystal", "108 Clear Beads", "Standard Quality (7mm)"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-std-offered`,
+          name: "Standard (Variant 1) – With Divine Offering",
+          price: 1700,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & devotion",
+          description: "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices. This standard variant is respectfully offered to the divine before it is sent to you.",
+          keyIncludes: ["Natural Sphatik Crystal", "Offered to Varanasi Deities", "Delivered as Kashi Prasad"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-prem-regular`,
+          name: "Premium (Variant 2) – Without Offering",
+          price: 3500,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Advanced spiritual practices",
+          description: "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices. This premium variant features larger, high-clarity crystals and is provided without being offered to the divine.",
+          keyIncludes: ["High-Clarity Sphatik Crystal", "108 Clear Beads", "Premium Quality (8mm)"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-prem-offered`,
+          name: "Premium (Variant 2) – With Divine Offering",
+          price: 4000,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Deep spiritual alignment",
+          description: "Sphatik Mala, traditionally valued for its natural clarity and spiritual significance, is commonly used for meditation, mantra chanting, prayer, and spiritual practices. This premium variant features larger, high-clarity crystals and is respectfully offered to the divine before it is sent to you.",
+          keyIncludes: ["High-Clarity Sphatik Crystal", "Offered to Varanasi Deities", "Delivered as Kashi Prasad"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Bead Type", value: "Clear Quartz Crystal (Sphatik)" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your Sphatik Japa Mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 5) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Chandan Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Chandan", "Sandalwood", "Kashi Prasad"],
+      seoTitle: `Chandan Mala – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `Crafted from natural Chandan (Sandalwood), this traditional 108-bead mala is respectfully offered to the divine as a Kashi Prasad before shipping.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Chandan Mala – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Chandan Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Crafted from natural Chandan (Sandalwood), this traditional mala is valued for its soothing fragrance, natural beauty, and spiritual significance. It is traditionally used for meditation, mantra chanting, prayer, and spiritual practices. Choose the mala without Divine Offering for ₹1,100, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,400.",
+      longDescription: [
+        "Crafted from natural Chandan (Sandalwood), this traditional mala is valued for its soothing fragrance, natural beauty, and spiritual significance. It is traditionally used for meditation, mantra chanting, prayer, and spiritual practices.",
+        "Choose the mala without Divine Offering for ₹1,100, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,400."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 1100,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "Crafted from natural Chandan (Sandalwood), this traditional mala is valued for its soothing fragrance, natural beauty, and spiritual significance. It is traditionally used for meditation, mantra chanting, prayer, and spiritual practices. Choose the mala without Divine Offering for ₹1,100, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,400.",
+          keyIncludes: ["Natural Sandalwood (Chandan)", "108 Beads", "Soothing Natural Fragrance"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 1400,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Crafted from natural Chandan (Sandalwood), this traditional mala is valued for its soothing fragrance, natural beauty, and spiritual significance. It is traditionally used for meditation, mantra chanting, prayer, and spiritual practices. Choose the mala without Divine Offering for ₹1,100, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,400.",
+          keyIncludes: ["Natural Sandalwood (Chandan)", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Natural Sandalwood (Chandan)" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 6) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Kamal Gatta Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Kamal Gatta", "Lotus Seed", "Kashi Prasad"],
+      seoTitle: `Kamal Gatta Mala – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `Kamal Gatta Mala is traditionally made from dried lotus seeds and is associated with Goddess Lakshmi, prosperity, abundance, and spiritual practice.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Kamal Gatta Mala – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Kamal Gatta Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Kamal Gatta Mala is traditionally made from dried lotus seeds and is associated with Goddess Lakshmi, prosperity, abundance, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹999, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,199.",
+      longDescription: [
+        "Kamal Gatta Mala is traditionally made from dried lotus seeds and is associated with Goddess Lakshmi, prosperity, abundance, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices.",
+        "Choose the mala without Divine Offering for ₹999, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,199."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 999,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "Kamal Gatta Mala is traditionally made from dried lotus seeds and is associated with Goddess Lakshmi, prosperity, abundance, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹999, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,199.",
+          keyIncludes: ["Authentic Lotus Seeds (Kamal Gatta)", "108 Beads", "Lakshmi Devotional Alignment"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 1199,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Kamal Gatta Mala is traditionally made from dried lotus seeds and is associated with Goddess Lakshmi, prosperity, abundance, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹999, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹1,199.",
+          keyIncludes: ["Authentic Lotus Seeds (Kamal Gatta)", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Lotus Seeds (Kamal Gatta)" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 7) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Divine Hindu Vajayanti Jaap Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Vajayanti", "Jaap Mala", "Kashi Prasad"],
+      seoTitle: `Divine Hindu Vajayanti Jaap Mala – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `Vajayanti Mala is traditionally associated with devotion, spiritual practice, and divine blessings. This 108-bead Jaap Mala is suitable for mantra chanting.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Divine Hindu Vajayanti Jaap Mala – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Divine Hindu Vajayanti Jaap Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Vajayanti Mala is traditionally associated with devotion, spiritual practice, and divine blessings. This 108-bead Jaap Mala is suitable for mantra chanting, meditation, prayer, and daily spiritual practices. Choose the mala without Divine Offering for ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+      longDescription: [
+        "Vajayanti Mala is traditionally associated with devotion, spiritual practice, and divine blessings. This 108-bead Jaap Mala is suitable for mantra chanting, meditation, prayer, and daily spiritual practices.",
+        "Choose the mala without Divine Offering for ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 899,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "Vajayanti Mala is traditionally associated with devotion, spiritual practice, and divine blessings. This 108-bead Jaap Mala is suitable for mantra chanting, meditation, prayer, and daily spiritual practices. Choose the mala without Divine Offering for ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+          keyIncludes: ["Authentic Vajayanti Seeds", "108 Beads", "Devotional Connection"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 999,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Vajayanti Mala is traditionally associated with devotion, spiritual practice, and divine blessings. This 108-bead Jaap Mala is suitable for mantra chanting, meditation, prayer, and daily spiritual practices. Choose the mala without Divine Offering for ₹899, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹999.",
+          keyIncludes: ["Authentic Vajayanti Seeds", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Vajayanti Seeds" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 8) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "White Pearl Mala – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "White Pearl", "Moti Mala", "Kashi Prasad"],
+      seoTitle: `White Pearl Mala – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `White Pearl Mala is crafted with lustrous pearl beads and is traditionally associated with purity, calmness, grace, and spiritual practice.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `White Pearl Mala – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `White Pearl Mala Details`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_03.png`,
+          alt: `White Pearl Mala Alternate View`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "White Pearl Mala is crafted with lustrous pearl beads and is traditionally associated with purity, calmness, grace, and spiritual practice. It is suitable for meditation, prayer, mantra chanting, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹4,400.",
+      longDescription: [
+        "White Pearl Mala is crafted with lustrous pearl beads and is traditionally associated with purity, calmness, grace, and spiritual practice. It is suitable for meditation, prayer, mantra chanting, and devotional practices.",
+        "Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹4,400."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 4000,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "White Pearl Mala is crafted with lustrous pearl beads and is traditionally associated with purity, calmness, grace, and spiritual practice. It is suitable for meditation, prayer, mantra chanting, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹4,400.",
+          keyIncludes: ["Lustrous Pearl Beads", "108 Beads", "Purity & Calming Energy"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 4400,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "White Pearl Mala is crafted with lustrous pearl beads and is traditionally associated with purity, calmness, grace, and spiritual practice. It is suitable for meditation, prayer, mantra chanting, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine and receive it as Kashi Prasad for ₹4,400.",
+          keyIncludes: ["Lustrous Pearl Beads", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Natural Pearl Beads" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 9) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Red Coral Mala (Moonga Mala) – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Red Coral", "Moonga Mala", "Kashi Prasad"],
+      seoTitle: `Red Coral Mala (Moonga Mala) – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `Red Coral Mala, also known as Moonga Mala, is traditionally associated with strength, courage, confidence, and spiritual practice.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Red Coral Mala (Moonga Mala) – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Red Coral Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "Red Coral Mala, also known as Moonga Mala, is traditionally associated with strength, courage, confidence, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine before it is sent to you for ₹4,299.",
+      longDescription: [
+        "Red Coral Mala, also known as Moonga Mala, is traditionally associated with strength, courage, confidence, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices.",
+        "Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine before it is sent to you for ₹4,299."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 4000,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "Red Coral Mala, also known as Moonga Mala, is traditionally associated with strength, courage, confidence, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine before it is sent to you for ₹4,299.",
+          keyIncludes: ["Authentic Red Coral Beads", "108 Beads", "Courage & Strength Focus"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 4299,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "Red Coral Mala, also known as Moonga Mala, is traditionally associated with strength, courage, confidence, and spiritual practice. It is commonly used for mantra chanting, meditation, prayer, and devotional practices. Choose the mala without Divine Offering for ₹4,000, or have it respectfully offered to the divine before it is sent to you for ₹4,299.",
+          keyIncludes: ["Authentic Red Coral Beads", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Red Coral (Moonga)" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
+  if (idx === 10) {
+    return {
+      slug: `mala-${padIdx}`,
+      title: "Rudraksh Jap Mala – Big Size – 108 Beads",
+      tagline: "Sacred Chanting Rosary",
+      category: "Malas",
+      tags: ["Mala", "Japa Rosary", "Varanasi Sourced", "Rudraksh", "Rudraksha Mala", "Kashi Prasad"],
+      seoTitle: `Rudraksh Jap Mala – Big Size – 108 Beads Blessed in Varanasi | Kashi Prasad`,
+      metaDescription: `This Big Size Rudraksh Jap Mala is traditionally used for mantra chanting, meditation, prayer, and spiritual practices. Rudraksha beads are deeply revered.`,
+      rating: null,
+      reviewsCount: null,
+      images: [
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_01.png`,
+          alt: `Rudraksh Jap Mala – Big Size – 108 Beads`
+        },
+        {
+          src: `/images/public:images:malas:/${padIdx}_mala_regenerated_02.png`,
+          alt: `Rudraksh Jap Mala Details`
+        }
+      ],
+      badge: "Kashi Prasad Available",
+      shortDescription: "This Big Size Rudraksh Jap Mala is traditionally used for mantra chanting, meditation, prayer, and spiritual practices. Rudraksha beads are deeply revered in Hindu tradition and are commonly used as a sacred aid for Japa and devotion. Choose the mala without Divine Offering for ₹499, or have it respectfully offered to the divine before it is sent to you for ₹799.",
+      longDescription: [
+        "This Big Size Rudraksh Jap Mala is traditionally used for mantra chanting, meditation, prayer, and spiritual practices. Rudraksha beads are deeply revered in Hindu tradition and are commonly used as a sacred aid for Japa and devotion.",
+        "Choose the mala without Divine Offering for ₹499, or have it respectfully offered to the divine before it is sent to you for ₹799."
+      ],
+      variants: [
+        {
+          id: `mala-${padIdx}-without`,
+          name: "Without Divine Offering",
+          price: 499,
+          originalPrice: null,
+          badge: "Regular",
+          suitableFor: "Personal practice & chanting",
+          description: "This Big Size Rudraksh Jap Mala is traditionally used for mantra chanting, meditation, prayer, and spiritual practices. Rudraksha beads are deeply revered in Hindu tradition and are commonly used as a sacred aid for Japa and devotion. Choose the mala without Divine Offering for ₹499, or have it respectfully offered to the divine before it is sent to you for ₹799.",
+          keyIncludes: ["Large Rudraksha Beads", "108 Beads", "Traditional Chanting Rosary"],
+          detailedItems: []
+        },
+        {
+          id: `mala-${padIdx}-with`,
+          name: "With Divine Offering",
+          price: 799,
+          originalPrice: null,
+          badge: "Kashi Prasad",
+          suitableFor: "Sacred blessings & protection",
+          description: "This Big Size Rudraksh Jap Mala is traditionally used for mantra chanting, meditation, prayer, and spiritual practices. Rudraksha beads are deeply revered in Hindu tradition and are commonly used as a sacred aid for Japa and devotion. Choose the mala without Divine Offering for ₹499, or have it respectfully offered to the divine before it is sent to you for ₹799.",
+          keyIncludes: ["Large Rudraksha Beads", "Offered to Varanasi Deities", "Blessed Kashi Prasad Delivery"],
+          detailedItems: []
+        }
+      ],
+      specifications: [
+        {
+          groupName: "Mala Details",
+          specs: [
+            { label: "Material", value: "Natural Rudraksha Seeds" },
+            { label: "Bead Count", value: "108 Beads" },
+            { label: "Origin", value: "Varanasi (Blessed & Purified)" }
+          ]
+        }
+      ],
+      faqs: [],
+      shippingTitle: "Sacred Dispatch Direct from Varanasi",
+      shippingText: "Packed respectfully and shipped directly from holy Varanasi. Choose the Kashi Prasad option to have your mala offered to the deity prior to dispatch."
+    };
+  }
   return {
     slug: `mala-${padIdx}`,
     title: `${padIdx} Mala`,
